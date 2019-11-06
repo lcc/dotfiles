@@ -18,4 +18,5 @@ telegram-desktop 1.8.15-1
 unzip 6.0-13
 wpa_supplicant 2:2.9-1
 xclip 0.13-2
+grub
 
