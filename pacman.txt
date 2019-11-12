@@ -1,23 +1,23 @@
-alsa-utils 1.1.9-1
-compton-rounded-corners r1186.0359abe-1
-dialog 1:1.3_20190808-1
-efibootmgr 16-1
-emacs-nox 26.3-1
-fakeroot 1.24-1
-feh 3.2.1-1
-figlet 2.2.5-3
-htop 2.2.0-2
-jupyter 4.1.0-7
-neofetch 6.1.0-1
-netctl 1.20-1
-npm 6.12.0-1
-ranger 1.9.2-1
-slack-desktop 4.1.1-2
-spotify 1:1.1.10.546-1
-telegram-desktop 1.8.15-1
-unzip 6.0-13
-wpa_supplicant 2:2.9-1
-xclip 0.13-2
+alsa-utils
+compton-rounded-corners
+dialog
+efibootmgr
+emacs-nox
+fakeroot
+feh
+figlet
+htop
+jupyter
+neofetch
+netctl
+npm
+ranger
+slack-desktop
+spotify
+telegram-desktop
+unzip
+wpa_supplicant
+xclip
 grub
 efibootmgr
 dhcpcd
@@ -27,3 +27,8 @@ firefox
 dmenu
 aspell
 aspell-en
+slock
+bluez
+bluez-utils
+pulseaudio-alsa
+pulseaudio-bluetooth
