@@ -2,16 +2,11 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # Path to your oh-my-zsh installation.
 export ZSH="/home/lucas/.oh-my-zsh"
-# add pure to fpath early
-fpath+=("$HOME/.config/pure")
-autoload -U promptinit; promptinit
-prompt pure
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-#ZSH_THEME="clean.zsh-theme"
-#ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME=""
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
@@ -73,16 +68,16 @@ prompt pure
 plugins=(git)
 export LANG="en_US.UTF-8"
 source $ZSH/oh-my-zsh.sh
-# User configuration
-export PATH=$PATH:/opt/jdk-12.0.2/bin/
-export PATH=$PATH:/opt/anaconda/bin/
-# export MANPATH="/usr/local/man:$MANPATH"
 
+# User configuration
+fpath+=("$HOME/.config/pure")
+autoload -U promptinit; promptinit
+prompt pure
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 #setxkbmap -model abnt2 -layout br -variant abnt2
 # Preferred editor for local and remote sessionsi
-export EDITOR=emacs
+export EDITOR=vim
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
