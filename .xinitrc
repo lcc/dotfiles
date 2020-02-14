@@ -1,6 +1,5 @@
-#xrandr --output DVI-I-0 --mode "1600x900"
-setxkbmap -model abnt2 -layout br -variant abnt2 
+setxkbmap -model thinkpad60 -layout br
 export _JAVA_AWT_WM_NONREPARENTING=1 
-feh --bg-scale /home/lucas/Pictures/croc-dad.jpg
+feh --bg-scale ~/Pictures/blue-dark-full.jpg
 compton --corner-radius 15 --blur-background &
 exec dwm
