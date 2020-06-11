@@ -41,8 +41,9 @@ xorg
 xorg-apps
 xorg-server
 broot
-pip
+python-pip
 marked
 ripgrep
 arch-wiki-docs
+telegram-desktop
 
