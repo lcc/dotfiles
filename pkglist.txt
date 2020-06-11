@@ -1,7 +1,7 @@
 alsa-utils
 dialog
 efibootmgr
-emacs-nox
+emacs
 fakeroot
 feh
 figlet
@@ -41,4 +41,8 @@ xorg
 xorg-apps
 xorg-server
 broot
+pip
+marked
+ripgrep
+arch-wiki-docs
 
