@@ -77,7 +77,7 @@ prompt pure
 # export LANG=en_US.UTF-8
 #setxkbmap -model abnt2 -layout br -variant abnt2
 # Preferred editor for local and remote sessionsi
-export EDITOR=vim
+export VISUAL=nvim && export EDITOR="$VISUAL"
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
@@ -101,4 +101,5 @@ alias adb='/home/lucas/Android/Sdk/platform-tools/adb'
 alias gpa='/home/lucas/workspace/git-patch-assitant/gitPatchAssist.py'
 alias telegram='/home/lucas/Downloads/telegram/Telegram/Telegram &'
 alias studio='~/.local/android-studio/bin/studio.sh &'
+alias vim="nvim"
 
