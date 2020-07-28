@@ -1,0 +1,4 @@
+https://aur.archlinux.org/slack-desktop.git
+https://aur.archlinux.org/popcorntime.git
+https://aur.archlinux.org/spotify.git
+

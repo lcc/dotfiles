@@ -46,4 +46,8 @@ marked
 ripgrep
 arch-wiki-docs
 telegram-desktop
-
+zathura
+steam
+discord
+xpdf
+ghostscript
