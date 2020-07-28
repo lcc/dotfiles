@@ -6,5 +6,4 @@ xrandr --output DisplayPort-1 --mode 1920x1080 --rate 60.00
 xrandr --output DisplayPort-1 --left-of DisplayPort-0
 dwmstatus 2>&1 >/dev/null &
 picom &
-dwmstatus &
 exec dwm
