@@ -1,0 +1,47 @@
+Config { font = "xft:Inconsolata Nerd Font Mono:style=Medium:size=16"
+       , borderColor = "black"
+       , border = TopB
+       , bgColor = "black"
+       , fgColor = "grey"
+       , alpha = 255
+       , position = Top
+       , textOffset = -1
+       , iconOffset = -1
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [
+                    -- Workspaces
+                       Run StdinReader
+
+                     -- Weather
+                     , Run Weather "SBRF" ["-t"," <tempC>ºC",
+                                          "-L","18","-H","28",
+                                          "--normal","grey",
+                                          "--high","red",
+                                          "--low","lightblue"] 36000
+
+                    -- CPU usage
+                    , Run Cpu ["-t"," <total>%","-L","3","-H","50",
+                               "--normal","grey","--high","red"] 10
+
+                    -- Memory Usage
+                    , Run Memory ["-t"," Mem: <usedratio>%"] 10
+
+                    -- Swap Usage
+                    , Run Swap [] 10
+
+                    -- Disk space free
+                    , Run DiskU [("/", "  hdd: <free>")] [] 60
+
+                    -- Date info
+                    , Run Date " %a %b %_d %Y %H:%M:%S" "date" 10
+        ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% }{ %SBRF% | %cpu% | %memory% * %swap% | %disku% | %date%"
+}
