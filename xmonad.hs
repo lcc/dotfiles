@@ -2,6 +2,7 @@ import XMonad
 import Data.Monoid
 import System.Exit
 
+import XMonad.Actions.UpdatePointer
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -13,6 +14,10 @@ myTerminal      = "st"
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
+
+-- Whether clicking on a window to focus also passes the click to the window
+myClickJustFocuses :: Bool
+myClickJustFocuses = False
 
 -- Width of the window border in pixels.
 --
@@ -217,7 +222,7 @@ myEventHook = mempty
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
-myLogHook = return ()
+myLogHook = updatePointer (0.5, 0.5) (0, 0)
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -246,6 +251,7 @@ defaults = defaultConfig {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
+        clickJustFocuses   = myClickJustFocuses,
         borderWidth        = myBorderWidth,
         modMask            = myModMask,
         -- numlockMask deprecated in 0.9.1
