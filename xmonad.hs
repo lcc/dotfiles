@@ -4,6 +4,7 @@ import System.Exit
 import XMonad.Util.Run
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
+import XMonad.Layout.IndependentScreens
 import XMonad.Actions.UpdatePointer
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -44,6 +45,8 @@ myModMask       = mod4Mask
 
 --             ["",        "",       "",      "",      "",      "",    "*"]
 myWorkspaces = ["\61729", "\62056", "\61889", "\61848", "\62150", "\61884", "*"]
+-- myConfig = def { workspaces = withScreens 2 myWorkspaces }
+
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -135,10 +138,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- mod-[1..9], Switch to workspace N
     -- mod-shift-[1..9], Move client to workspace N
     --
+
     [((m .|. modm, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-    ++
+
+    -- [((m .|. modm, k), windows $ onCurrentScreen f i)
+    --     | (i, k) <- zip (workspaces' conf) [xK_1 .. xK_9]
+    --     , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+
+   ++
 
     --
     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3

@@ -51,3 +51,4 @@ steam
 discord
 xpdf
 ghostscript
+ntp
