@@ -6,6 +6,8 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
 import XMonad.Layout.IndependentScreens
 import XMonad.Actions.UpdatePointer
+import XMonad.Hooks.DynamicBars
+import XMonad.Layout.Gaps
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -43,8 +45,12 @@ myModMask       = mod4Mask
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
 
---             ["",        "",       "",      "",      "",      "",    "*"]
-myWorkspaces = ["\61729", "\62056", "\61889", "\61848", "\62150", "\61884", "*"]
+browserWorkspace = "\62056"
+slackWorkspace = "\61848"
+emacsWorkspace = "\61729"
+spotifyWorkspace = "\61884"
+--             [     "",             "",           ""        "",      "",          "",            "",       "*"]
+myWorkspaces = [emacsWorkspace, browserWorkspace, "\61728" ,"\61889", slackWorkspace, "\62150", spotifyWorkspace, "*"]
 -- myConfig = def { workspaces = withScreens 2 myWorkspaces }
 
 
@@ -134,8 +140,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     --
     -- mod-[1..9], Switch to workspace N
-    --
-    -- mod-[1..9], Switch to workspace N
     -- mod-shift-[1..9], Move client to workspace N
     --
 
@@ -188,19 +192,21 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
+
+-- myLayout = avoidStruts ( gaps [(U,18), (D,18), (R,23), (L,23)] $ tiled ||| Mirror tiled ||| Full)
 myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
   where
-    -- default tiling algorithm partitions the screen into two panes
-    tiled   = Tall nmaster delta ratio
+     -- default tiling algorithm partitions the screen into two panes
+     tiled   = Tall nmaster delta ratio
 
-    -- The default number of windows in the master pane
-    nmaster = 1
+     -- The default number of windows in the master pane
+     nmaster = 1
 
-    -- Default proportion of screen occupied by master pane
-    ratio   = 1/2
+     -- Default proportion of screen occupied by master pane
+     ratio   = 1/2
 
-    -- Percent of screen to increment by when resizing panes
-    delta   = 3/100
+     -- Percent of screen to increment by when resizing panes
+     delta   = 3/100
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -218,15 +224,18 @@ myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
 -- 'className' and 'resource' are used below.
 --
 myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
-    , className =? "Slack"          --> doFloat
+    [ className =? "Slack"          --> doShift slackWorkspace
+    , className =? "firefox"  --> doShift browserWorkspace
+    , className =? "Emacs"  --> doShift emacsWorkspace
+    , className =? "spotify" --> doShift spotifyWorkspace
     , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore ]
-
+    , resource  =? "kdesktop"       --> doIgnore 
+    ]
 ------------------------------------------------------------------------
 -- Event handling
 
+-- * EwmhDesktops users should change this to ewmhDesktopsEventHook
+--
 -- Defines a custom handler function for X Events. The function should
 -- return (All True) if the default handler is to be run afterwards. To
 -- combine event hooks use mappend or mconcat from Data.Monoid.
@@ -249,7 +258,11 @@ myLogHook = updatePointer (0.5, 0.5) (0, 0)
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = return ()
+myStartupHook = do
+  spawn "firefox"
+  spawn "slack"
+  spawn "spotify"
+  spawn "emacs"
 
 ------------------------------------------------------------------------
 -- Status Bar
@@ -262,6 +275,10 @@ myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "|" "|" }
 
 -- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
+
+------------------------------------------------------------------------
+-- GAPs
+
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
