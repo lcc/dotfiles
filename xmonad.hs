@@ -1,61 +1,40 @@
 import XMonad
-import Data.Monoid
 import System.Exit
-import XMonad.Util.Run
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
-import XMonad.Layout.IndependentScreens
 import XMonad.Actions.UpdatePointer
-import XMonad.Hooks.DynamicBars
-import XMonad.Layout.Gaps
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.StatusBar
 
--- The preferred terminal program, which is used in a binding below and by
--- certain contrib modules.
---
 myTerminal      = "st"
-
--- Whether focus follows the mouse pointer.
-myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
-
--- Whether clicking on a window to focus also passes the click to the window
-myClickJustFocuses :: Bool
 myClickJustFocuses = False
 
--- Width of the window border in pixels.
---
-myBorderWidth   = 3
+myBorderWidth = 3
 
--- modMask lets you specify which modkey you want to use. The default
--- is mod1Mask ("left alt").  You may also consider using mod3Mask
--- ("right alt"), which does not conflict with emacs keybindings. The
--- "windows key" is usually mod4Mask.
---
 myModMask       = mod4Mask
-
--- The default number of workspaces (virtual screens) and their names.
--- By default we use numeric strings, but any string may be used as a
--- workspace name. The number of workspaces is determined by the length
--- of this list.
---
--- A tagging example:
---
--- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
---
 
 browserWorkspace = "\62056"
 slackWorkspace = "\61848"
 emacsWorkspace = "\61729"
 spotifyWorkspace = "\61884"
---             [     "",             "",           ""        "",      "",          "",            "",       "*"]
-myWorkspaces = [emacsWorkspace, browserWorkspace, "\61728" ,"\61889", slackWorkspace, "\62150", spotifyWorkspace, "*"]
--- myConfig = def { workspaces = withScreens 2 myWorkspaces }
+terminalWorkspace = "\61728"
+pdfWorkspace = "\61889"
+messagingWorkspace = "\62150"
+randWorkspace = "*"
+myWorkspaces =
+  [ emacsWorkspace
+  , browserWorkspace
+  , terminalWorkspace
+  , pdfWorkspace
+  , slackWorkspace
+  , messagingWorkspace
+  , spotifyWorkspace
+  , randWorkspace
+  ]
 
-
--- Border colors for unfocused and focused windows, respectively.
---
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
@@ -166,63 +145,21 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 -- Mouse bindings: default actions bound to mouse events
 --
 myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
-
-    -- mod-button1, Set the window to floating mode and move by dragging
     [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
                                        >> windows W.shiftMaster))
-
-    -- mod-button2, Raise the window to the top of the stack
     , ((modm, button2), (\w -> focus w >> windows W.shiftMaster))
-
-    -- mod-button3, Set the window to floating mode and resize by dragging
     , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
                                        >> windows W.shiftMaster))
-
-    -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-------------------------------------------------------------------------
--- Layouts:
 
--- You can specify and transform your layouts by modifying these values.
--- If you change layout bindings be sure to use 'mod-shift-space' after
--- restarting (with 'mod-q') to reset your layout state to the new
--- defaults, as xmonad preserves your old layout settings by default.
---
--- The available layouts.  Note that each layout is separated by |||,
--- which denotes layout choice.
---
-
--- myLayout = avoidStruts ( gaps [(U,18), (D,18), (R,23), (L,23)] $ tiled ||| Mirror tiled ||| Full)
 myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
   where
-     -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
-
-     -- The default number of windows in the master pane
      nmaster = 1
-
-     -- Default proportion of screen occupied by master pane
      ratio   = 1/2
-
-     -- Percent of screen to increment by when resizing panes
      delta   = 3/100
 
-------------------------------------------------------------------------
--- Window rules:
-
--- Execute arbitrary actions and WindowSet manipulations when managing
--- a new window. You can use this to, for example, always float a
--- particular program, or have a client always appear on a particular
--- workspace.
---
--- To find the property name associated with a program, use
--- > xprop | grep WM_CLASS
--- and click on the client you're interested in.
---
--- To match on the WM_NAME, you can use 'title' in the same way that
--- 'className' and 'resource' are used below.
---
 myManageHook = composeAll
     [ className =? "Slack"          --> doShift slackWorkspace
     , className =? "firefox"  --> doShift browserWorkspace
@@ -231,68 +168,25 @@ myManageHook = composeAll
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore 
     ]
-------------------------------------------------------------------------
--- Event handling
 
--- * EwmhDesktops users should change this to ewmhDesktopsEventHook
---
--- Defines a custom handler function for X Events. The function should
--- return (All True) if the default handler is to be run afterwards. To
--- combine event hooks use mappend or mconcat from Data.Monoid.
---
 myEventHook = mempty
-
-------------------------------------------------------------------------
--- Status bars and logging
-
--- Perform an arbitrary action on each internal state change or X event.
--- See the 'XMonad.Hooks.DynamicLog' extension for examples.
---
-myLogHook = updatePointer (0.5, 0.5) (0, 0)
-
-------------------------------------------------------------------------
--- Startup hook
-
--- Perform an arbitrary action each time xmonad starts or is restarted
--- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
--- per-workspace layout choices.
---
--- By default, do nothing.
 myStartupHook = do
   spawn "firefox"
   spawn "slack"
   spawn "spotify"
   spawn "emacs"
 
-------------------------------------------------------------------------
--- Status Bar
-
--- Command to launch the bar.
 myBar = "xmobar"
-
--- Custom PP, configure it as you like. It determines what is being written to the bar.
 myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "|" "|" }
+myLogHook = updatePointer (0.5, 0.5) (0, 0)
 
--- Key binding to toggle the gap for the bar.
-toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
+main :: IO()
+main = xmonad
+  . ewmhFullscreen
+  . ewmh
+  . withEasySB (statusBarProp myBar (pure myPP)) defToggleStrutsKey
+  $ defaults
 
-------------------------------------------------------------------------
--- GAPs
-
-
-------------------------------------------------------------------------
--- Now run xmonad with all the defaults we set up.
-
--- Run xmonad with the settings you specify. No need to modify this.
---
-main = xmonad =<< statusBar myBar myPP toggleStrutsKey defaults
-
--- A structure containing your configuration settings, overriding
--- fields in the default config. Any you don't override, will
--- use the defaults defined in xmonad/XMonad/Config.hs
---
--- No need to modify this.
---
 defaults = def {
       -- simple stuff
         terminal           = myTerminal,
@@ -316,7 +210,7 @@ defaults = def {
         startupHook        = myStartupHook
     }
 
--- | Finally, a copy of the default bindings in simple textual tabular format.
+
 help :: String
 help = unlines ["The default modifier key is 'alt'. Default keybindings:",
     "",
