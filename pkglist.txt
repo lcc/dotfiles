@@ -20,7 +20,6 @@ dhcpcd
 zsh
 picom
 qutebrowser
-dmenu
 aspell
 aspell-en
 slock
@@ -31,8 +30,6 @@ pulseaudio-bluetooth
 base-devel
 vlc
 ttf-font-awesome
-ttf-inconsolata
-ttf-hack
 arandr
 hub
 freetype2
@@ -40,6 +37,8 @@ pavucontrol
 xorg
 xorg-apps
 xorg-server
+xorg-xinit
+xorg-xmessage
 broot
 python-pip
 marked
@@ -52,3 +51,15 @@ discord
 xpdf
 ghostscript
 ntp
+git
+libx11
+libxft
+libxinerama
+libxrandr
+libxss
+pkgconf
+stow
+nvim
+firefox
+xmobar
+openvpn
