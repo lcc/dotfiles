@@ -16,8 +16,8 @@ Config { font = "xft:Inconsolata Nerd Font Mono:style=Medium:size=16"
        , overrideRedirect = True
        , commands = [
                     -- Workspaces
-                       Run StdinReader
-
+                       -- Run StdinReader
+                       Run XMonadLog
                      -- Weather
                      , Run Weather "SBRF" ["-t"," <tempC>ºC",
                                           "-L","18","-H","28",
@@ -43,5 +43,5 @@ Config { font = "xft:Inconsolata Nerd Font Mono:style=Medium:size=16"
         ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %SBRF% | %cpu% | %memory% * %swap% | %disku% | %date%"
+       , template = "%XMonadLog% }{ %SBRF% | %cpu% | %memory% * %swap% | %disku% | %date%"
 }
