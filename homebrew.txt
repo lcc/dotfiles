@@ -21,7 +21,6 @@ glib
 gnu-getopt
 gnu-sed
 go
-go-swagger
 graphite2
 graphviz
 gts
